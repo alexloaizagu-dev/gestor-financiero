@@ -94,130 +94,108 @@ tab1, tab2, tab3, tab4 = st.tabs([
 # TAB 1
 # =====================================================
 
+# =====================================================
+# TAB 1
+# =====================================================
+
 with tab1:
+
+    if "mensaje_guardado" not in st.session_state:
+        st.session_state.mensaje_guardado = False
+
+    if st.session_state.mensaje_guardado:
+
+        st.success(
+            "Movimiento guardado correctamente"
+        )
+
+        st.session_state.mensaje_guardado = False
 
     st.header("Agregar Movimiento")
 
     # ==========================================
-    # TIPO
+    # FORMULARIO
     # ==========================================
 
-    tipo = st.selectbox(
-        "Tipo",
-        [
-            "Seleccione",
-            "Ingreso",
-            "Egreso"
-        ]
-    )
+    with st.form(
+        "form_movimiento",
+        clear_on_submit=True
+    ):
 
-    # ==========================================
-    # CATEGORÍAS DINÁMICAS
-    # ==========================================
+        # ==========================================
+        # TIPO
+        # ==========================================
 
-    categorias = []
-
-    if tipo != "Seleccione":
-
-        categorias = obtener_categorias(tipo)
-
-    # ==========================================
-    # COLUMNAS
-    # ==========================================
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-
-        monto = st.number_input(
-            "Monto",
-            min_value=0.0,
-            step=1000.0,
-            value=0.0
+        tipo = st.selectbox(
+            "Tipo",
+            [
+                "Seleccione",
+                "Ingreso",
+                "Egreso"
+            ]
         )
 
-        fecha = st.date_input(
-            "Fecha"
+        # ==========================================
+        # CATEGORÍAS DINÁMICAS
+        # ==========================================
+
+        categorias = []
+
+        if tipo != "Seleccione":
+
+            categorias = obtener_categorias(tipo)
+
+        # ==========================================
+        # COLUMNAS
+        # ==========================================
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+
+            monto = st.number_input(
+                "Monto",
+                min_value=0.0,
+                step=1000.0,
+                value=0.0
+            )
+
+            fecha = st.date_input(
+                "Fecha"
+            )
+
+        with col2:
+
+            categoria = st.selectbox(
+                "Categoría",
+                ["Seleccione"] + categorias
+            )
+
+            descripcion = st.text_input(
+                "Descripción"
+            )
+
+        # ==========================================
+        # BOTÓN
+        # ==========================================
+
+        guardar = st.form_submit_button(
+            "Guardar Movimiento"
         )
 
-    with col2:
-
-        categoria = st.selectbox(
-            "Categoría",
-            ["Seleccione"] + categorias
-        )
-
-        descripcion = st.text_input(
-            "Descripción"
-        )
-
-    # ==========================================
-    # BOTÓN
-    # ==========================================
-
-    guardar = st.button(
-        "Guardar Movimiento"
-    )
-
-    # ==========================================
-    # VALIDACIONES
-    # ==========================================
-
-    if guardar:
-
-        if tipo == "Seleccione":
-
-            st.warning(
-                "Debes seleccionar un tipo"
-            )
-
-        elif categoria == "Seleccione":
-
-            st.warning(
-                "Debes seleccionar una categoría"
-            )
-
-        elif monto <= 0:
-
-            st.warning(
-                "El monto debe ser mayor a cero"
-            )
-
-        elif descripcion.strip() == "":
-
-            st.warning(
-                "Debes ingresar una descripción"
-            )
-
-        else:
-
-            insertar_movimiento(
-                tipo,
-                monto,
-                categoria,
-                descripcion,
-                str(fecha)
-            )
-
-            st.success(
-                "Movimiento guardado correctamente"
-            )
-
-            st.rerun()
-
-        # =========================
+        # ==========================================
         # VALIDACIONES
-        # =========================
+        # ==========================================
 
         if guardar:
 
-            if tipo == "":
+            if tipo == "Seleccione":
 
                 st.warning(
                     "Debes seleccionar un tipo"
                 )
 
-            elif categoria == "":
+            elif categoria == "Seleccione":
 
                 st.warning(
                     "Debes seleccionar una categoría"
@@ -245,9 +223,7 @@ with tab1:
                     str(fecha)
                 )
 
-                st.success(
-                    "Movimiento guardado correctamente"
-                )
+                st.session_state.mensaje_guardado = True
 
                 st.rerun()
 
