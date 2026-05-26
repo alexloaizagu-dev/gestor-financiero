@@ -3,41 +3,32 @@ import pandas as pd
 from exportaciones import exportar_excel
 
 from database import (
-
     crear_tablas,
-
     insertar_movimiento,
     obtener_movimientos,
     actualizar_movimiento,
     eliminar_movimiento,
-
     obtener_categorias,
     agregar_categoria,
     eliminar_categoria,
-
     guardar_presupuesto,
     obtener_presupuesto
 )
 
 from dashboard import (
-
     mostrar_metricas,
     mostrar_dashboard,
     mostrar_resumen_mensual
 )
 
-from exportaciones import exportar_excel
-
 from styles import aplicar_estilos
-
 
 # ==========================================
 # CONFIGURACIÓN
 # ==========================================
 
 st.set_page_config(
-
-    page_title="Gestor Financiero",
+    page_title="Mis Finanzas",
     page_icon="💰",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -60,11 +51,8 @@ crear_tablas()
 # ==========================================
 
 with st.sidebar:
-
     st.title("💰 Finanzas")
-
     st.markdown("---")
-
     st.info(
         """
         Aplicación profesional
@@ -83,16 +71,11 @@ st.title("💰 Gestor Financiero Profesional")
 # ==========================================
 
 tab1, tab2, tab3, tab4 = st.tabs([
-
     "➕ Movimientos",
     "📋 Historial",
     "📊 Dashboard",
     "⚙️ Configuración"
 ])
-
-# =====================================================
-# TAB 1
-# =====================================================
 
 # =====================================================
 # TAB 1
@@ -104,55 +87,46 @@ with tab1:
         st.session_state.mensaje_guardado = False
 
     if st.session_state.mensaje_guardado:
-
         st.success(
             "Movimiento guardado correctamente"
         )
-
         st.session_state.mensaje_guardado = False
 
     st.header("Agregar Movimiento")
 
+    # =====================================================
+    # SELECCIÓN DE TIPO (Fuera del form para dinamismo instantáneo)
+    # =====================================================
+    tipo = st.selectbox(
+        "Tipo",
+        [
+            "Seleccione",
+            "Ingreso",
+            "Egreso"
+        ]
+    )
+
+    # ==========================================
+    # CATEGORÍAS DINÁMICAS
+    # ==========================================
+    categorias = []
+    if tipo != "Seleccione":
+        categorias = obtener_categorias(tipo)
+
     # ==========================================
     # FORMULARIO
     # ==========================================
-
     with st.form(
         "form_movimiento",
         clear_on_submit=True
     ):
 
         # ==========================================
-        # TIPO
-        # ==========================================
-
-        tipo = st.selectbox(
-            "Tipo",
-            [
-                "Seleccione",
-                "Ingreso",
-                "Egreso"
-            ]
-        )
-
-        # ==========================================
-        # CATEGORÍAS DINÁMICAS
-        # ==========================================
-
-        categorias = []
-
-        if tipo != "Seleccione":
-
-            categorias = obtener_categorias(tipo)
-
-        # ==========================================
         # COLUMNAS
         # ==========================================
-
         col1, col2 = st.columns(2)
 
         with col1:
-
             monto = st.number_input(
                 "Monto",
                 min_value=0.0,
@@ -165,7 +139,6 @@ with tab1:
             )
 
         with col2:
-
             categoria = st.selectbox(
                 "Categoría",
                 ["Seleccione"] + categorias
@@ -178,7 +151,6 @@ with tab1:
         # ==========================================
         # BOTÓN
         # ==========================================
-
         guardar = st.form_submit_button(
             "Guardar Movimiento"
         )
@@ -186,35 +158,24 @@ with tab1:
         # ==========================================
         # VALIDACIONES
         # ==========================================
-
         if guardar:
-
             if tipo == "Seleccione":
-
                 st.warning(
                     "Debes seleccionar un tipo"
                 )
-
             elif categoria == "Seleccione":
-
                 st.warning(
                     "Debes seleccionar una categoría"
                 )
-
             elif monto <= 0:
-
                 st.warning(
                     "El monto debe ser mayor a cero"
                 )
-
             elif descripcion.strip() == "":
-
                 st.warning(
                     "Debes ingresar una descripción"
                 )
-
             else:
-
                 insertar_movimiento(
                     tipo,
                     monto,
@@ -224,7 +185,6 @@ with tab1:
                 )
 
                 st.session_state.mensaje_guardado = True
-
                 st.rerun()
 
 # =====================================================
@@ -234,11 +194,8 @@ with tab1:
 datos = obtener_movimientos()
 
 if len(datos) > 0:
-
     df = pd.DataFrame(
-
         datos,
-
         columns=[
             "ID",
             "Tipo",
@@ -248,14 +205,11 @@ if len(datos) > 0:
             "Fecha"
         ]
     )
-
     df["Fecha"] = pd.to_datetime(
         df["Fecha"],
         format="mixed"
     )
-
 else:
-
     df = pd.DataFrame(
         columns=[
             "ID",
@@ -272,30 +226,26 @@ else:
 # =====================================================
 
 with tab2:
-
     st.subheader("Historial de Movimientos")
 
     if len(df) > 0:
-
         # ==========================================
         # FILTROS
         # ==========================================
-
         col1, col2, col3, col4 = st.columns(4)
 
         with col1:
-
             filtro_tipo = st.selectbox(
                 "Tipo",
                 [
                     "Todos",
                     "Ingreso",
                     "Egreso"
-                ]
+                ],
+                key="filtro_tab2_tipo"  # Añadido key para evitar duplicados
             )
 
         with col2:
-
             filtro_categoria = st.selectbox(
                 "Categoría",
                 [
@@ -306,14 +256,12 @@ with tab2:
             )
 
         with col3:
-
             fecha_inicio = st.date_input(
                 "Fecha inicial",
                 value=df["Fecha"].min().date()
             )
 
         with col4:
-
             fecha_fin = st.date_input(
                 "Fecha final",
                 value=df["Fecha"].max().date()
@@ -326,28 +274,21 @@ with tab2:
         # ==========================================
         # FILTRAR
         # ==========================================
-
         df_filtrado = df.copy()
 
         if filtro_tipo != "Todos":
-
             df_filtrado = df_filtrado[
-                df_filtrado["Tipo"]
-                == filtro_tipo
+                df_filtrado["Tipo"] == filtro_tipo
             ]
 
         if filtro_categoria != "Todas":
-
             df_filtrado = df_filtrado[
-                df_filtrado["Categoría"]
-                == filtro_categoria
+                df_filtrado["Categoría"] == filtro_categoria
             ]
 
         if busqueda:
-
             df_filtrado = df_filtrado[
-                df_filtrado["Descripción"]
-                .str.contains(
+                df_filtrado["Descripción"].str.contains(
                     busqueda,
                     case=False,
                     na=False
@@ -355,32 +296,18 @@ with tab2:
             ]
 
         df_filtrado = df_filtrado[
-
-            (
-                df_filtrado["Fecha"].dt.date
-                >= fecha_inicio
-            )
-
+            (df_filtrado["Fecha"].dt.date >= fecha_inicio)
             &
-
-            (
-                df_filtrado["Fecha"].dt.date
-                <= fecha_fin
-            )
+            (df_filtrado["Fecha"].dt.date <= fecha_fin)
         ]
 
         # ==========================================
         # TABLA
         # ==========================================
-
         tabla = st.data_editor(
-
             df_filtrado,
-
             use_container_width=True,
-
             hide_index=True,
-
             disabled=[
                 "ID",
                 "Fecha"
@@ -390,51 +317,38 @@ with tab2:
         # ==========================================
         # BOTONES
         # ==========================================
-
         col1, col2 = st.columns(2)
 
         with col1:
-
             if st.button("💾 Guardar cambios"):
-
                 for _, fila in tabla.iterrows():
-
                     actualizar_movimiento(
-
                         fila["ID"],
                         fila["Tipo"],
                         fila["Monto"],
                         fila["Categoría"],
                         fila["Descripción"]
                     )
-
                 st.success(
                     "Cambios guardados"
                 )
-
                 st.rerun()
 
         with col2:
-
             excel = exportar_excel(
                 df_filtrado
             )
 
             st.download_button(
-
                 label="⬇️ Descargar Excel",
-
                 data=excel,
-
                 file_name="movimientos.xlsx",
-
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             )
 
         # ==========================================
         # ELIMINAR
         # ==========================================
-
         st.subheader("🗑️ Eliminar Movimiento")
 
         opciones = ["Seleccionar"] + list(
@@ -447,27 +361,19 @@ with tab2:
         )
 
         if st.button("Eliminar movimiento"):
-
             if movimiento == "Seleccionar":
-
                 st.warning(
                     "Debes seleccionar un movimiento"
                 )
-
             else:
-
                 eliminar_movimiento(
                     movimiento
                 )
-
                 st.success(
                     "Movimiento eliminado"
                 )
-
                 st.rerun()
-
     else:
-
         st.info(
             "No hay movimientos registrados"
         )
@@ -477,19 +383,13 @@ with tab2:
 # =====================================================
 
 with tab3:
-
     st.subheader("Dashboard Financiero")
 
     if len(df) > 0:
-
         mostrar_metricas(df)
-
         mostrar_resumen_mensual(df)
-
         mostrar_dashboard(df)
-
     else:
-
         st.info(
             "No existen datos"
         )
@@ -499,30 +399,23 @@ with tab3:
 # =====================================================
 
 with tab4:
-
     st.subheader("⚙️ Configuración")
 
     # ==========================================
     # PRESUPUESTO
     # ==========================================
-
     st.markdown("## 💵 Presupuesto Mensual")
 
     presupuesto = st.number_input(
-
         "Definir presupuesto mensual",
-
         min_value=0.0,
-
         step=100000.0
     )
 
     if st.button("Guardar presupuesto"):
-
         guardar_presupuesto(
             presupuesto
         )
-
         st.success(
             "Presupuesto guardado"
         )
@@ -536,15 +429,11 @@ with tab4:
     # ==========================================
     # CATEGORÍAS
     # ==========================================
-
     st.markdown("---")
-
     st.markdown("## 🗂️ Categorías")
 
     tipo_categoria = st.selectbox(
-
         "Tipo categoría",
-
         [
             "Ingreso",
             "Egreso"
@@ -556,45 +445,34 @@ with tab4:
     )
 
     if st.button("Agregar categoría"):
-
         if nueva_categoria.strip() == "":
-
             st.warning(
                 "Debes ingresar un nombre"
             )
-
         else:
-
             agregar_categoria(
                 nueva_categoria,
                 tipo_categoria
             )
-
             st.success(
                 "Categoría agregada"
             )
-
             st.rerun()
 
-    categorias = obtener_categorias(
+    categorias_config = obtener_categorias(
         tipo_categoria
     )
 
     categoria_eliminar = st.selectbox(
-
         "Eliminar categoría",
-
-        categorias
+        categorias_config
     )
 
     if st.button("Eliminar categoría"):
-
         eliminar_categoria(
             categoria_eliminar
         )
-
         st.success(
             "Categoría eliminada"
         )
-
         st.rerun()
