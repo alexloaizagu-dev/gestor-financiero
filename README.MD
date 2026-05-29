@@ -1,98 +1,405 @@
 # 💰 Mis Finanzas - Gestor Financiero Profesional
 
-## 📌 1. Descripción del Proyecto
-**"Mis Finanzas"** es una solución tecnológica diseñada para la gestión, control y análisis detallado de finanzas personales. La aplicación permite registrar y categorizar movimientos de dinero con el objetivo de identificar hábitos de consumo, evaluar el estado financiero mensual en tiempo real y promover buenas prácticas en la administración del capital.
+---
 
-Este proyecto representa la evolución completa de un producto de software, partiendo desde un algoritmo lógico conceptual en consola hasta convertirse en una herramienta interactiva modular con interfaz gráfica web y almacenamiento relacional robusto.
+# 📌 1. Descripción del Proyecto
+
+**Mis Finanzas** es una solución tecnológica desarrollada para la gestión, control y análisis detallado de finanzas personales.
+
+La aplicación permite registrar y categorizar movimientos financieros con el objetivo de identificar hábitos de consumo, evaluar el estado financiero mensual en tiempo real y promover buenas prácticas en la administración del dinero.
+
+Este proyecto representa la evolución completa de un producto de software, iniciando desde un algoritmo lógico en consola hasta convertirse en una aplicación web modular, visual e interactiva con almacenamiento relacional robusto.
 
 ---
 
-## 🎯 2. Objetivos del Proyecto
+# 🎯 2. Objetivos del Proyecto
 
-* **Objetivo General:** Desarrollar una aplicación interactiva que permita centralizar el registro de ingresos y egresos, procesar la información de forma dinámica y presentar análisis visuales para la toma de decisiones financieras personales.
-* **Objetivos Específicos:**
-    * Diseñar un motor lógico inicial basado en Programación Orientada a Objetos (POO) en **Google Colab** usando estructuras dinámicas como la **Lista Enlazada Simple**.
-    * Migrar el prototipo de consola hacia una interfaz gráfica de usuario (GUI) web moderna utilizando **Streamlit**.
-    * Garantizar la persistencia de la información mediante un sistema de almacenamiento relacional local con **SQLite3**.
-    * Facilitar la exportación de datos para análisis externos en formato de hoja de cálculo Excel.
+## ✅ Objetivo General
 
----
+Desarrollar una aplicación interactiva que permita centralizar el registro de ingresos y egresos, procesar la información de forma dinámica y presentar análisis visuales para apoyar la toma de decisiones financieras personales.
 
-## 🧠 3. Propuesta de Solución y Arquitectura Lógica
+## ✅ Objetivos Específicos
 
-El proyecto se estructuró bajo una arquitectura modular limpia en **Visual Studio Code**, separando las responsabilidades del sistema:
-* **Capa de Interfaz (`app.py`):** Construida con **Streamlit**, maneja la experiencia de usuario mediante pestañas (*Tabs*), formularios de captura e inyección de estilos ejecutivos.
-* **Capa de Persistencia (`database.py`):** Controla la conectividad a **SQLite3**, administrando las tablas de la base de datos local (`finanzas.db`).
-* **Capa Analítica (`dashboard.py`):** Procesa la información mediante **Pandas** para renderizar métricas clave y gráficos interactivos.
-* **Capa de Salida (`exportaciones.py`):** Automatiza la generación de reportes descargables a **Excel**.
+* Diseñar un motor lógico inicial basado en Programación Orientada a Objetos (POO) utilizando Google Colab.
+* Implementar estructuras dinámicas como listas enlazadas simples.
+* Migrar el prototipo de consola hacia una interfaz gráfica web moderna utilizando Streamlit.
+* Garantizar persistencia de datos mediante SQLite3.
+* Facilitar exportación de información financiera en formato Excel.
+* Implementar validaciones y controles de errores para mejorar la integridad de los datos.
 
 ---
 
-## 📦 4. Estructura del Repositorio
+# 🧠 3. Propuesta de Solución y Arquitectura
+
+El proyecto se estructuró bajo una arquitectura modular desarrollada en Visual Studio Code, separando responsabilidades para mejorar escalabilidad, mantenimiento y organización del código.
+
+## 📄 Capa de Interfaz — `app.py`
+
+Construida con Streamlit.
+
+### Responsabilidades
+
+* Formularios interactivos
+* Pestañas dinámicas
+* Captura de datos
+* Validaciones visuales
+* Navegación del usuario
+* Integración entre módulos
+
+---
+
+## 🗃️ Capa de Persistencia — `database.py`
+
+Módulo encargado de la gestión de datos utilizando SQLite3.
+
+### Funciones principales
+
+* Creación de tablas
+* Inserción de movimientos
+* Actualización de registros
+* Eliminación de registros
+* Administración de categorías
+* Gestión de presupuesto mensual
+
+---
+
+## 📊 Capa Analítica — `dashboard.py`
+
+Procesa la información mediante Pandas para generar:
+
+* KPIs financieros
+* Métricas automáticas
+* Gráficas interactivas
+* Resúmenes mensuales
+
+---
+
+## 📁 Capa de Exportación — `exportaciones.py`
+
+Permite generar archivos Excel descargables con la información filtrada del historial financiero.
+
+---
+
+# 📦 4. Estructura del Repositorio
 
 ```text
 mis-finanzas-app/
+│
 ├── 📁 .streamlit/
-│   └── config.toml                # Configuración de la paleta de colores y entorno web
+│   └── config.toml
+│
 ├── 📁 docs/
-│   └── Presentacion_Mis_Finanzas.pdf # Diápositivas ejecutivas del proyecto (Objetivos y Pruebas)
+│   └── Presentacion_Mis_Finanzas.pdf
+│
 ├── 📁 notebooks/
-│   └── Programa_contabilidad.ipynb  # Código fuente del prototipo inicial de consola (Colab)
-├── 📄 app.py                      # Interfaz gráfica principal y flujos del usuario (Streamlit)
-├── 📄 database.py                 # Conectividad SQL, inicialización de tablas y operaciones CRUD
-├── 📄 dashboard.py                # Lógica de procesamiento de gráficos y métricas analíticas
-├── 📄 exportaciones.py            # Motor de exportación de reportes a formato XLSX
-├── 📄 styles.py                   # Estilos visuales personalizados para la interfaz
-└── 📄 requirements.txt            # Archivo de dependencias del proyecto
+│   └── Programa_contabilidad.ipynb
+│
+├── 📄 app.py
+├── 📄 database.py
+├── 📄 dashboard.py
+├── 📄 exportaciones.py
+├── 📄 styles.py
+├── 📄 utils.py
+│
+├── 📄 requirements.txt
+├── 📄 README.md
+└── 📄 .gitignore
+```
 
-5. Características y Funcionalidades de la App
-Gestión Inteligente de Movimientos: Formulario dinámico con carga automática de categorías según el tipo seleccionado (Ingreso/Egreso). Cuenta con validaciones estrictas en tiempo real que impiden registrar montos negativos o dejar descripciones vacías.
+---
 
-Historial Administrativo con Edición en Lote (CRUD Completo): * Permite buscar, filtrar y modificar múltiples registros simultáneamente gracias a la grilla interactiva st.data_editor, guardando los cambios directamente en la base de datos.
+# ⚙️ 5. Funcionalidades Principales
 
-Control de eliminación selectiva de registros mediante su identificador único (ID).
+## 💵 Gestión Inteligente de Movimientos
 
-Descarga de Reportes: Botón interactivo para exportar instantáneamente el historial filtrado a un archivo organizado de Excel.
+* Registro dinámico de ingresos y egresos.
+* Carga automática de categorías según el tipo seleccionado.
+* Validaciones estrictas para evitar:
 
-Dashboard de Analítica Financiera: Despliegue automatizado de KPIs (Total Ingresos, Total Gastos, Balance Neto) y gráficos interactivos del resumen mensual del consumo del usuario.
+  * Montos negativos
+  * Campos vacíos
+  * Datos inválidos
 
-Panel de Configuración: Control de presupuesto mensual tope e interfaz dinámica para añadir o eliminar categorías personalizadas.
+---
 
-🧪 6. Pruebas del Sistema
-Prueba de Consistencia en Formularios: Verificación del bloqueo de inserciones incorrectas (valores vacíos o montos menores o iguales a cero).
+## 📋 Historial Administrativo (CRUD Completo)
 
-Prueba de Persistencia Concurrente: Validación de la correcta escritura en la base de datos finanzas.db sin bloquear los hilos de la aplicación web (check_same_thread=False).
+El sistema permite:
 
-Prueba de Reactividad: Confirmación de que los filtros del historial y los gráficos del dashboard se actualizan de forma inmediata al interactuar con la aplicación.
+* Buscar movimientos
+* Filtrar información
+* Editar múltiples registros
+* Eliminar movimientos
+* Actualizar información en tiempo real
 
-🚀 7. Algunas Mejoras e Ideas Implementadas
-Durante el desarrollo desde Google Colab a Visual Studio Code se incluyeron mejoras críticas de rendimiento y diseño:
+Utilizando:
 
-Transición Estructural: Se pasó de almacenar la información en listas dinámicas en memoria volatil y archivos planos de texto, a un motor relacional en SQLite3 indexado por IDs únicos.
+* `st.data_editor`
+* SQLite3
+* DataFrames de Pandas
 
-Interfaz Profesional: Se reemplazó el menú de texto en consola por un entorno web interactivo con diseño responsivo, limpio y de estilo ejecutivo.
+---
 
-Optimización Analítica: Integración de la librería Pandas para agrupar, procesar y estructurar grandes volúmenes de movimientos financieros en milisegundos.
+## 📥 Exportación de Reportes
 
-📈 8. Proyecciones a Futuro (Hacia un Modelo SaaS)
-La aplicación está diseñada con una arquitectura modular lista para escalar hacia las siguientes metas comerciales y técnicas:
+* Descarga automática del historial financiero en formato Excel (`.xlsx`).
+* Exportación filtrada según la información visualizada.
 
-A. Módulo de Gestión de Deudas y Recordatorios 🚨 (Próxima Implementación)
-Apartado de Deudas: Creación de una nueva pestaña dedicada exclusivamente al control de cuentas por pagar y cuentas por cobrar.
+---
 
-Sistema de Alertas: Integración de notificaciones automáticas y recordatorios visuales en la interfaz que le avisen al usuario los días previos a la fecha de vencimiento de un compromiso financiero para evitar recargos.
+## 📊 Dashboard Financiero
 
-B. Infraestructura en la Nube y Multi-Usuario (Multi-Tenant) 🌐
-Base de Datos Distribuida: Migrar el archivo local de SQLite3 hacia Supabase en la nube, evitando que los datos sean efímeros o se pierdan al reiniciar el servidor.
+Visualización automática de:
 
-Acceso Multi-Usuario Seguro: Implementación de autenticación de usuarios y políticas de seguridad a nivel de fila (Row-Level Security - RLS) para garantizar que múltiples personas puedan usar la aplicación en internet simultáneamente y que cada quien vea estrictamente su propia información (Muro Invisible).
+* Total de ingresos
+* Total de egresos
+* Balance neto
+* Resumen mensual
+* Gráficas financieras
 
-C. Modelo de Negocio SaaS Freemium 💳
-Monetización: Acceso gratuito financiado con banners publicitarios discretos (Google AdSense) y una suscripción Premium mensual económica para desbloquear funciones avanzadas (como la eliminación de anuncios y la futura conciliación bancaria automática).
+---
 
-🎓 9. Conclusiones
-Evolución del Software: Se demostró la viabilidad de transformar un algoritmo conceptual puro basado en estructuras de datos de consola hacia un Producto Mínimo Viable (PMV) de nivel profesional, visual y altamente funcional.
+## ⚙️ Panel de Configuración
 
-Salud Financiera Basada en Datos: La combinación de programación e interfaces interactivas permite transformar registros cotidianos en información de valor estratégico para el control de gastos y hábitos de consumo.
+* Gestión de presupuesto mensual.
+* Creación dinámica de categorías.
+* Eliminación de categorías personalizadas.
 
-Escalabilidad Arquitectural: Diseñar de forma modular separa la lógica de negocio de la interfaz, lo que permite añadir nuevas funciones (como el módulo de deudas o bases de datos en la nube) de forma rápida y sin romper el código existente.
+---
+
+# 🧪 6. Pruebas del Sistema
+
+## ✅ Prueba de Validación de Formularios
+
+Verificación de restricciones para impedir:
+
+* Valores vacíos
+* Montos menores o iguales a cero
+* Selecciones inválidas
+
+---
+
+## ✅ Prueba de Persistencia Concurrente
+
+Validación de escritura y lectura correcta en SQLite3 utilizando:
+
+```python
+check_same_thread=False
+```
+
+Esto evita bloqueos concurrentes en la aplicación web.
+
+---
+
+## ✅ Prueba de Reactividad
+
+Confirmación de actualización inmediata en:
+
+* Dashboard
+* Historial
+* Filtros
+* Métricas
+* Gráficas
+
+---
+
+# 🚀 7. Mejoras Implementadas Durante el Desarrollo
+
+## 🔄 Transición Estructural
+
+El proyecto evolucionó desde:
+
+* Listas dinámicas en memoria
+* Archivos planos `.txt`
+
+Hacia:
+
+* SQLite3
+* Persistencia relacional
+* IDs únicos
+* Arquitectura modular
+
+---
+
+## 🎨 Interfaz Profesional
+
+Se reemplazó el entorno de consola por:
+
+* Interfaz web interactiva
+* Diseño moderno
+* Experiencia visual amigable
+* Navegación dinámica
+
+---
+
+## ⚡ Optimización Analítica
+
+Integración de:
+
+* Pandas
+* Procesamiento de datos
+* Métricas automáticas
+* Resúmenes financieros rápidos
+
+---
+
+# 📈 8. Proyecciones a Futuro
+
+## 🚨 A. Gestión de Deudas y Recordatorios
+
+Implementar:
+
+* Control de cuentas por pagar
+* Recordatorios automáticos
+* Alertas visuales
+* Fechas de vencimiento
+
+---
+
+## 🌐 B. Infraestructura en la Nube
+
+Migrar SQLite3 hacia Supabase para:
+
+* Evitar pérdida de información
+* Tener persistencia en la nube
+* Permitir acceso desde internet
+
+---
+
+## 👥 C. Sistema Multiusuario
+
+Implementar:
+
+* Inicio de sesión
+* Autenticación segura
+* Seguridad por usuario
+* Políticas Row-Level Security (RLS)
+
+---
+
+## 💳 D. Modelo SaaS Freemium
+
+Posible implementación de:
+
+* Plan gratuito con anuncios
+* Suscripción premium
+* Funciones avanzadas
+* Reportes automáticos
+* Integraciones financieras
+
+---
+
+# 🎓 9. Conclusiones
+
+## ✅ Evolución del Software
+
+El proyecto demuestra cómo una solución lógica desarrollada inicialmente en consola puede evolucionar hacia una aplicación web moderna, profesional y modular.
+
+---
+
+## ✅ Aplicación de Conocimientos
+
+Durante el desarrollo se aplicaron conocimientos de:
+
+* Programación Orientada a Objetos
+* Manejo de excepciones
+* Arquitectura modular
+* Persistencia de datos
+* Desarrollo web
+* Visualización de información
+* Bases de datos relacionales
+
+---
+
+## ✅ Escalabilidad
+
+La separación modular del sistema permite agregar nuevas funcionalidades sin afectar el funcionamiento actual de la aplicación.
+
+---
+
+# 🛠️ 10. Tecnologías Utilizadas
+
+* Python
+* Streamlit
+* SQLite3
+* Pandas
+* OpenPyXL
+* Visual Studio Code
+* Google Colab
+
+---
+
+# ▶️ 11. Ejecución del Proyecto
+
+## 1️⃣ Clonar repositorio
+
+```bash
+git clone URL_DEL_REPOSITORIO
+```
+
+---
+
+## 2️⃣ Instalar dependencias
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## 3️⃣ Ejecutar aplicación
+
+```bash
+streamlit run app.py
+```
+
+---
+
+# 📦 12. requirements.txt
+
+```txt
+streamlit
+pandas
+openpyxl
+plotly
+```
+
+---
+
+# 🚫 13. Archivo .gitignore
+
+```gitignore
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+.env
+venv/
+```
+
+---
+
+# 👨‍💻 14. Autor
+
+**Alexander Loaiza Guapacha**
+
+---
+
+# ⭐ 15. Resultado Final
+
+El proyecto final incluye:
+
+* Aplicación web funcional
+* Persistencia de datos
+* Dashboard financiero
+* Exportación Excel
+* Arquitectura modular
+* Interfaz moderna
+* Validaciones robustas
+* Base académica sólida
+* Escalabilidad futura
+
+---
+
+# 🙌 Gracias por revisar el proyecto
